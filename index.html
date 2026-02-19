@@ -1,79 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Defective Application</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        h1, h2 {
-            color: #333;
-        }
-        form {
-            max-width: 600px;
-            margin: auto;
-        }
-        label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Selenium Automation Full Practice Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { color: #2c3e50; }
+    section { margin-bottom: 30px; }
+    table, th, td { border: 1px solid #333; border-collapse: collapse; padding: 8px; }
+    button { margin: 5px; }
+    #hiddenElement { display: none; }
+    #dragSource, #dropTarget {
+      width: 150px; height: 50px; border: 2px dashed #555;
+      display: inline-block; text-align: center; line-height: 50px; margin: 10px;
+    }
+    #dropTarget { background-color: #f0f0f0; }
+    #loading { display: none; color: red; }
+    #ajaxContent { margin-top: 10px; font-weight: bold; }
+  </style>
+  <script>
+    function showAlert() {
+      alert("This is a test alert!");
+    }
+    function showConfirm() {
+      let result = confirm("Do you want to proceed?");
+      document.getElementById("confirmResult").innerText = result ? "Confirmed!" : "Cancelled!";
+    }
+    function showPrompt() {
+      let name = prompt("Enter your name:");
+      document.getElementById("promptResult").innerText = name ? "Hello, " + name : "No input provided.";
+    }
+    function changeText() {
+      document.getElementById("dynamicText").innerText = "Text changed!";
+    }
+    function toggleHidden() {
+      const el = document.getElementById("hiddenElement");
+      el.style.display = (el.style.display === "none") ? "block" : "none";
+    }
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+    function drop(ev) {
+      ev.preventDefault();
+      let data = ev.dataTransfer.getData("text");
+      ev.target.innerText = "Dropped: " + data;
+    }
+    function loadDynamicContent() {
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("ajaxContent").innerText = "";
+      setTimeout(() => {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("ajaxContent").innerText = "Dynamic content loaded!";
+      }, 3000); // simulate 3-second delay
+    }
+  </script>
 </head>
 <body>
-    <h1>Defective Application</h1>
-    <form id="defectiveForm">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username">
+  <h1>Selenium Automation Full Practice Page</h1>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password">
+  <!-- Form Elements -->
+  <section>
+    <h2>Form Elements</h2>
+    <form id="testForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username"><br><br>
 
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"><br><br>
 
-        <label for="age">Age</label>
-        <input type="number" id="age" name="age" min="1" max="100">
+      <label for="skills">Select a skill:</label>
+      <select id="skills" name="skills">
+        <option value="java">Java</option>
+        <option value="python">Python</option>
+        <option value="selenium">Selenium</option>
+      </select><br><br>
 
-        <label for="gender">Gender</label>
-        <select id="gender" name="gender">
-            <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-        </select>
+      <input type="checkbox" id="subscribe" name="subscribe"> Subscribe<br><br>
 
-        <label for="country">Country</label>
-        <input type="text" id="country" name="country">
-
-        <button type="submit">Submit</button>
+      <button type="submit">Submit</button>
     </form>
+  </section>
 
-    <script>
-        document.getElementById('defectiveForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            alert('Form submitted successfully!');
-        });
-    </script>
+  <!-- Buttons and Alerts -->
+  <section>
+    <h2>Buttons and Alerts</h2>
+    <button onclick="showAlert()">Click for Alert</button>
+    <button onclick="showConfirm()">Click for Confirm</button>
+    <p id="confirmResult"></p>
+    <button onclick="showPrompt()">Click for Prompt</button>
+    <p id="promptResult"></p>
+    <button onclick="changeText()">Change Text</button>
+    <p id="dynamicText">Original text</p>
+    <button onclick="toggleHidden()">Toggle Hidden Element</button>
+    <p id="hiddenElement">You found the hidden element!</p>
+  </section>
+
+  <!-- Table -->
+  <section>
+    <h2>Table</h2>
+    <table>
+      <tr><th>ID</th><th>Name</th><th>Role</th></tr>
+      <tr><td>1</td><td>Alice</td><td>Tester</td></tr>
+      <tr><td>2</td><td>Bob</td><td>Developer</td></tr>
+      <tr><td>3</td><td>Charlie</td><td>Manager</td></tr>
+    </table>
+  </section>
+
+  <!-- Links -->
+  <section>
+    <h2>Links</h2>
+    <a href="https://www.example.com" target="_blank">External Link</a><br>
+    <a href="#testForm">Jump to Form</a>
+  </section>
+
+  <!-- File Upload -->
+  <section>
+    <h2>File Upload</h2>
+    <form>
+      <input type="file" id="fileUpload" name="fileUpload"><br><br>
+      <button type="submit">Upload</button>
+    </form>
+  </section>
+
+  <!-- Iframe -->
+  <section>
+    <h2>Iframe</h2>
+    <iframe src="https://www.wikipedia.org" width="400" height="200" title="Sample Iframe"></iframe>
+  </section>
+
+  <!-- Drag and Drop -->
+  <section>
+    <h2>Drag and Drop</h2>
+    <div id="dragSource" draggable="true" ondragstart="drag(event)">Drag Me</div>
+    <div id="dropTarget" ondrop="drop(event)" ondragover="allowDrop(event)">Drop Here</div>
+  </section>
+
+  <!-- Dynamic Content (AJAX Simulation) -->
+  <section>
+    <h2>Dynamic Content Loading</h2>
+    <button onclick="loadDynamicContent()">Load Content</button>
+    <p id="loading">Loading...</p>
+    <div id="ajaxContent"></div>
+  </section>
 </body>
 </html>
