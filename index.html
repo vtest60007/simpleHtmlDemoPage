@@ -2,64 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Search Practice Page</title>
+  <title>User Dashboard Practice Page</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
     h1 { color: #2c3e50; }
-    #results { margin-top: 20px; }
-    .result-item { margin: 8px 0; padding: 10px; border: 1px solid #ccc; }
-    .highlight { background-color: #f9f9a9; }
+    nav a {
+      margin: 10px;
+      padding: 8px 12px;
+      background-color: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    nav a:hover { background-color: #2980b9; }
+    section { margin-top: 30px; }
+    table, th, td { border: 1px solid #333; border-collapse: collapse; padding: 8px; }
+    #notification { color: green; font-weight: bold; }
   </style>
   <script>
-    function performSearch(event) {
-      event.preventDefault();
-      const query = document.getElementById("searchBox").value;
-      const resultsDiv = document.getElementById("results");
-      resultsDiv.innerHTML = "";
-
-      if (!query) {
-        resultsDiv.innerHTML = "<p>Please enter a search term.</p>";
-        return;
-      }
-
-      // Simulated search results
-      const sampleResults = [
-        "Selenium WebDriver tutorial",
-        "Selenium Grid setup guide",
-        "Selenium IDE basics",
-        "Advanced Selenium automation techniques",
-        "Handling alerts and popups in Selenium"
-      ];
-
-      sampleResults.forEach((item, index) => {
-        const div = document.createElement("div");
-        div.className = "result-item";
-        div.innerHTML = `<a href="result${index+1}.html">${item}</a>`;
-        if (item.toLowerCase().includes(query.toLowerCase())) {
-          div.classList.add("highlight");
-        }
-        resultsDiv.appendChild(div);
-      });
+    function showNotification() {
+      document.getElementById("notification").innerText = "New notification received!";
+    }
+    function updateProfile() {
+      document.getElementById("profileStatus").innerText = "Profile updated successfully!";
     }
   </script>
 </head>
 <body>
-  <h1>Search Page</h1>
+  <h1>Welcome to Your Dashboard</h1>
 
-  <form onsubmit="performSearch(event)">
-    <label for="searchBox">Enter search term:</label><br>
-    <input type="text" id="searchBox" name="searchBox"><br><br>
-    <button type="submit">Search</button>
-  </form>
-
-  <div id="results"></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Logout</a>
+    <a href="register.html">Register</a>
+    <a href="forgot.html">Forgot Password</a>
+    <a href="playground.html">Playground</a>
+  </nav>
 
   <section>
-    <h2>Navigation</h2>
-    <a href="index.html">Home</a><br>
-    <a href="login.html">Login</a><br>
-    <a href="register.html">Register</a><br>
-    <a href="dashboard.html">Dashboard</a>
+    <h2>User Profile</h2>
+    <form onsubmit="event.preventDefault(); updateProfile();">
+      <label for="fullname">Full Name:</label><br>
+      <input type="text" id="fullname" name="fullname" value="John Doe"><br><br>
+
+      <label for="email">Email:</label><br>
+      <input type="text" id="email" name="email" value="john@example.com"><br><br>
+
+      <button type="submit">Update Profile</button>
+    </form>
+    <p id="profileStatus"></p>
+  </section>
+
+  <section>
+    <h2>Notifications</h2>
+    <button onclick="showNotification()">Check Notifications</button>
+    <p id="notification"></p>
+  </section>
+
+  <section>
+    <h2>Recent Activity</h2>
+    <table>
+      <tr><th>Date</th><th>Action</th></tr>
+      <tr><td>2026-02-18</td><td>Logged in</td></tr>
+      <tr><td>2026-02-17</td><td>Updated profile</td></tr>
+      <tr><td>2026-02-16</td><td>Registered new account</td></tr>
+    </table>
   </section>
 </body>
 </html>
